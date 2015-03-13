@@ -36,4 +36,6 @@ To run with docker :
 
 And open your browser to http://127.0.0.1:8000
 
+Only tested with Firefox.
+
 Have Fun :)
