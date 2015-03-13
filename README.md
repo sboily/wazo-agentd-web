@@ -26,8 +26,11 @@ Finally you need to activating the stomp web socket
 How to run ?
 ============
 
+Please don't forget to update the value for the host and username/password in the js/xivo.js !
+
 To run with docker :
 
     git clone https://github.com/sboily/xivo-agentd-web.git
     cd xivo-agentd-web
     docker run -d -p 8000:80 -v $(pwd):/var/www/html dockerfile/nginx
+
