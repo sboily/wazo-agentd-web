@@ -34,3 +34,6 @@ To run with docker :
     cd xivo-agentd-web
     docker run -d -p 8000:80 -v $(pwd):/var/www/html dockerfile/nginx
 
+And open your browser to http://127.0.0.1:8000
+
+Have Fun :)
