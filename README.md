@@ -3,7 +3,7 @@
 What is it ?
 ============
 
-This is only un proof of concept to use xivo-agentd to login or loggout an agent.
+This is only un proof of concept to use xivo-agentd to login or logout an agent with a very simple web interface with javascript and html.
 
 ![Agent screenshot](/screenshots/agents.png?raw=true "Agent")
 
