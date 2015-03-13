@@ -23,17 +23,6 @@ div code {
     display: block;
 }
 
-#first div code {
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-    border: 1px solid #eee;
-    margin-bottom: 5px;
-}
-
-#second div {
-    font-size: 0.8em;
-}
-
 .brick.small {
   width: 140px;
   height: 140px;
@@ -43,3 +32,9 @@ div code {
   width: 300px;
   height: 300px;
 }
+
+label, input { display:block; }
+input.text { margin-bottom:12px; width:95%; padding: .4em; }
+fieldset { padding:0; border:0; margin-top:25px; }
+h1 { font-size: 1.2em; margin: .6em 0; }
+.validateTips { border: 1px solid transparent; padding: 0.3em; }

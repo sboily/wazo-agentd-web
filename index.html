@@ -9,6 +9,7 @@
   <script src="js/jquery.gridly.js"></script>
   <script src="js/xivo.js"></script>
   <link rel="stylesheet" href="css/jquery.gridly.css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <link rel="stylesheet" href="css/xivo.css">
   <title>Agentd</title>
 </head>
@@ -16,6 +17,19 @@
 <body lang="en">
 
     <div class="gridly example"></div>
+
+    <div id="dialog-form" title="Login agent">
+      <p class="validateTips">All form fields are required.</p>
+      <form>
+      <fieldset>
+        <label for="extension">Extension</label>
+          <input type="text" name="extension" id="extension" value="8000" class="text ui-widget-content ui-corner-all">
+        <label for="context">Context</label>
+          <input type="text" name="context" id="context" value="default" class="text ui-widget-content ui-corner-all">
+        <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+      </fieldset>
+      </form>
+    </div>
 
 </body>
 </html>

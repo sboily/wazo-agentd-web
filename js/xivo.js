@@ -8,6 +8,7 @@ var client = Stomp.over(ws);
 client.heartbeat.incoming = 0;
 client.heartbeat.outgoing = 0;
 
+
 var onmessage = function(m) {
     raw = $.parseJSON(m.body)
     events_agent_status(raw.data);
@@ -60,58 +61,49 @@ var events_agent_status = function(e) {
     $("#" + e.agent_id + " #status")
       .text("Logged: " + ((e.status) == "logged_in" ? true : false));
 
-    if (!is_logged(e.status))
+    if (!is_logged(e.status)) {
         remove_unlog_action(e.agent_id);
-    else
+        $("#" + e.agent_id).append(append_log_action(e.agent_id));
+    }
+    else {
+        remove_unlog_action(e.agent_id);
         $("#" + e.agent_id).append(append_unlog_action(e.agent_id));
+    }
 };
 
 var unlog = function(id) {
-    $.ajax({
-        url: agentd_host + "/1.0/agents/by-id/" + id + "/logoff",
-        type: "POST",
-        dataType: "json",
-        ContentType: "application/json",
-        accepts: { json: 'application/json' },
-        success: function(data){alert(data);},
-        failure: function(errMsg) {
-            alert(errMsg);
-        }
-    });
+    var client = new $.RestClient(agentd_host + "/1.0/agents/");
+
+    client.add("by-id");
+    client["by-id"].add("logoff", { stripTrailingSlash: true });
+    client["by-id"].logoff.create(id);
 };
 
 var log = function(id) {
     var client = new $.RestClient(agentd_host + "/1.0/agents/");
 
-    context = "internal";
-    extension = "1000";
-    data = {context: context , extension:  extension };
-    console.log(data);
-
+    dialog.dialog("close");
+    data = {context: $(context).val() , extension:  $(extension).val() };
     client.add("by-id");
     client["by-id"].add("login", { stripTrailingSlash: true, 
-                                   ajax: { beforeSend: 
-                                                  function(xhrObj){
-                                                    xhrObj.setRequestHeader("Content-Type","application/json");
-                                                  },
-                                           contentType: "application/json"
-                                         }
-                                });
-    client["by-id"].login.create(id);
+                                   stringifyData: true
+                                 });
+    client["by-id"].login.create(id, data);
 };
 
 var get_agents = function() {
-    $.ajax({
-        url: agentd_host + "/1.0/agents",
-        type: "GET",
-        dataType: "json",
-        ContentType: "application/json; charset=utf-8",
-        accepts: { json: 'application/json' },
-    }).then(function(data) {
-       $(data).each(function() {
-           draw_box(this);
-       });
+    var client = new $.RestClient(agentd_host + "/1.0/");
+
+    client.add("agents", { stripTrailingSlash: true });
+    client.agents.read().done(function(data) {
+      $(data).each(function(d) {
+        draw_box(data[d]);
+      });
     });
+}
+
+var get_context_extension = function() {
+    dialog.dialog("open");
 }
 
 client.debug = function(e) {};
@@ -123,8 +115,19 @@ $(function() {
         id = ($(this).parent().parent().attr('id'));
         action = $(this).parent().attr('class');
         if (action == 'log')
-            log(id);
+            get_context_extension()
         else if (action == 'unlog')
             unlog(id);
     });
+    dialog = $("#dialog-form")
+               .dialog({ autoOpen: false, 
+                         height: 400,
+                         width: 450,
+                         modal: true,
+                         buttons: {
+                             "Login agent": function() { log(id); },
+                             Cancel: function() { dialog.dialog("close"); }
+                         }
+                       });
+
 });
