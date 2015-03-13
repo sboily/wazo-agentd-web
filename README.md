@@ -1,5 +1,12 @@
 # xivo-agentd-web
 
+What is it ?
+============
+
+This is only un proof of concept to use xivo-agentd to login or loggout an agent.
+
+![Alt text](/screenshots/agent.png?raw=true "Agent")
+
 How to configure ?
 ==================
 
