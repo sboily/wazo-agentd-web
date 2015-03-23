@@ -35,7 +35,7 @@ How to run ?
 
 Please don't forget to update the value for the host and username/password in the js/xivo.js !
 
-Warning: Docker don't run on xivo server for the moment !
+Warning: Docker don't run on xivo server for the moment ! Use a recent ubuntu distro for example.
 
 To run with docker :
 
