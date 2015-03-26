@@ -41,7 +41,7 @@ To run with docker :
 
     git clone https://github.com/sboily/xivo-agentd-web.git
     cd xivo-agentd-web
-    docker run -d -p 8000:80 -v $(pwd):/var/www/html dockerfile/nginx
+    docker run -d -p 8000:80 -v $(pwd):/var/www/html nginx
 
 And open your browser to http://127.0.0.1:8000
 
