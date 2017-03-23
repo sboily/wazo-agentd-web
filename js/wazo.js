@@ -19,7 +19,7 @@ function launch_ws(ws_url) {
         if (init == 0) {
             wsInit(msg, sock);
         } else {
-            events_agent_status(msg.data);
+            wsEvents(msg);
         }
     };
 
@@ -124,7 +124,18 @@ function eventActions(box, e) {
     }
 }
 
-function events_agent_status(e) {
+function wsEvents(data) {
+    switch(data.name) {
+        case 'agent_paused':
+        case 'agent_unpaused':
+            break;
+        case 'agent_status_update':
+            changeAgentStatus(data.data);
+            break;
+    }
+}
+
+function changeAgentStatus(e) {
     agent = {
       id: e.agent_id,
       logged: is_logged(e.status)
