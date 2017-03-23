@@ -25,6 +25,7 @@ h1 { font-size: 1.2em; margin: .6em 0; }
 .grid .brick.small {
   width: 140px;
   height: 140px; 
+  line-height: 0.7em;
 }
 
 .grid .brick.large {

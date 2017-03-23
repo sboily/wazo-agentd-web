@@ -64,8 +64,14 @@ function draw_box(e) {
     }));
 
     box.append($('<p>', {
-      id: 'status',
+      id: 'logged',
       html: 'Logged: ' + e.logged
+    }));
+
+    paused = e.paused || false;
+    box.append($('<p>', {
+      id: 'paused',
+      html: 'Paused: ' + paused
     }));
 
     eventActions(box, e);
@@ -120,6 +126,11 @@ function eventActions(box, e) {
         case false:
           box.append(logAction());
           listenClickLog(e.id);
+          data = {
+            agent_id: e.id,
+            paused: false
+          }
+          changeAgentPauseStatus(data);
           break;
     }
 }
@@ -128,6 +139,7 @@ function wsEvents(data) {
     switch(data.name) {
         case 'agent_paused':
         case 'agent_unpaused':
+            changeAgentPauseStatus(data.data);
             break;
         case 'agent_status_update':
             changeAgentStatus(data.data);
@@ -135,18 +147,23 @@ function wsEvents(data) {
     }
 }
 
-function changeAgentStatus(e) {
+function changeAgentStatus(data) {
     agent = {
-      id: e.agent_id,
-      logged: is_logged(e.status)
+      id: data.agent_id,
+      logged: is_logged(data.status)
     }
 
     box = $("#" + agent.id);
     box.effect("shake", "slow");
-    $("#" + agent.id + ">#status")
+    $("#" + agent.id + ">#logged")
       .text("Logged: " + agent.logged);
 
     eventActions(box, agent);
+}
+
+function changeAgentPauseStatus(data) {
+    $("#" + data.agent_id + ">#paused")
+      .text("Paused: " + data.paused);
 }
 
 function logoffAgent(id) {
